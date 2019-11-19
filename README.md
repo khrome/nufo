@@ -26,13 +26,14 @@ Programmatic Usage
 ------------------
 
 ```js
-    var nufo = new NuFO({
+    var NuFO = require('nufo');
+    var document = new NuFO({
         //the target markdown file
         file : '<filepath>',
         //for caching images fetched by URL
         cacheDir : '<cache directory>'
     });
-    nufo.transform('NFO', function(err, result){
+    document.transform('NFO', function(err, result){
         if(err) throw err;
         // do something with 'result'
     });

@@ -1,6 +1,50 @@
 {
   "name": "nufo",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "keywords": [
+    "ascii",
+    "figlet",
+    "ansi",
+    "terminal",
+    "text",
+    "command-line",
+    "logging",
+    "log",
+    "xterm",
+    "shell",
+    "256",
+    "rgb",
+    "formatting",
+    "tty",
+    "styles",
+    "style",
+    "str",
+    "string",
+    "cli",
+    "console",
+    "terminal",
+    "table",
+    "compositing",
+    "colors",
+    "colour",
+    "color",
+    "nfo",
+    "markdown"
+  ],
+  "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/khrome/nufo/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/khrome/nufo.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "bin": "./bin/nufo",
   "dependencies": {
     "ascii-art": "^2.1.6",
     "async": "^3.1.0",
