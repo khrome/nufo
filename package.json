@@ -1,1 +1,14 @@
-{"name":"nufo","version":"0.0.1"}
+{
+  "name": "nufo",
+  "version": "0.0.1",
+  "dependencies": {
+    "ascii-art": "^2.1.6",
+    "async": "^3.1.0",
+    "concat-stream": "^2.0.0",
+    "home": "^2.0.0",
+    "markdown": "^0.5.0",
+    "object-hash": "^2.0.0",
+    "request": "^2.88.0",
+    "yargs": "^15.0.1"
+  }
+}

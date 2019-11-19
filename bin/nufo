@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+var argv;
+var yargs = require('yargs');
+var home = require('home');
+var fs = require('fs');
+var NuFO = require('../nufo');
+
+yargs.usage('Usage: $0 [options] <target>')
+yargs.demand(1)
+    .example('$0 /path/to/my.md ', 'render the markdown file')
+.help('h')
+    .alias('h', 'help')
+    .epilog('©2019 - Abbey Hawk Sparrow');
+argv = yargs.argv;
+
+var target = argv._.pop();
+
+ensureExists(home.resolve('~/.NuFO'), 0744, function(err) {
+    if (err) throw err;
+    config(home.resolve('~/.NuFO/config.json'), {
+        cacheDir : home.resolve('~/.NuFO')+'/'
+    }, function(err, conf){
+        conf.file = target;
+        var nufo = new NuFO(conf);
+        nufo.transform('NFO', function(err, result){
+            if(err) throw err;
+            console.log(result);
+        });
+    })
+});
+
+//UTIL
+
+function ensureExists(path, mask, cb) {
+    fs.stat(path, function(err){
+        if(err){
+            fs.mkdir(path, mask, function(err) {
+                if (err) cb(err); // something else went wrong
+                else cb(undefined); // successfully created folder
+            });
+        }else cb(undefined);
+    });
+}
+
+function config(path, initial, cb) {
+    fs.stat(path, function(err){
+        if(err){
+            fs.writeFile(path, JSON.stringify(initial), function(){
+                cb(undefined, initial);
+            });
+        }else{
+            fs.readFile(path, function(err, body){
+                cb(undefined, JSON.parse(body));
+            });
+        }
+    })
+}
