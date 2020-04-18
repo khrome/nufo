@@ -300,6 +300,11 @@ var Transformation = function(options){
             if(!err) done(ob);
         });
     }
+    if(this.options.body){
+        this.load(this.options.body, function(err){
+            if(!err) done(ob);
+        });
+    }
 }
 
 Transformation.prototype.load = function(stream, callback){

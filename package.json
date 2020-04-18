@@ -1,7 +1,7 @@
 {
   "name": "nufo",
-  "version": "0.0.4",
-  "description":"Generate NFOs from markdown",
+  "version": "0.0.5",
+  "description": "Generate NFOs from markdown",
   "keywords": [
     "ascii",
     "figlet",
