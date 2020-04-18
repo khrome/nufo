@@ -1,6 +1,7 @@
 {
   "name": "nufo",
-  "version": "0.0.5",
+  "version": "0.0.6",
+  "main":"nufo.js",
   "description": "Generate NFOs from markdown",
   "keywords": [
     "ascii",
