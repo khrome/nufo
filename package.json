@@ -1,7 +1,7 @@
 {
   "name": "nufo",
-  "version": "0.0.6",
-  "main":"nufo.js",
+  "version": "0.1.0",
+  "main": "nufo.js",
   "description": "Generate NFOs from markdown",
   "keywords": [
     "ascii",
@@ -48,7 +48,8 @@
   },
   "bin": "./bin/nufo",
   "dependencies": {
-    "ascii-art": "^2.1.6",
+    "app-term-kit": "^0.2.0",
+    "ascii-art": "^2.8.1",
     "async": "^3.1.0",
     "concat-stream": "^2.0.0",
     "home": "^2.0.0",

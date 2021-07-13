@@ -1,57 +1,48 @@
 #!/usr/bin/env node
-var argv;
-var yargs = require('yargs');
-var home = require('home');
 var fs = require('fs');
+var os = require('os');
 var NuFO = require('../nufo');
-
-yargs.usage('Usage: $0 [options] <target>')
-yargs.demand(1)
-    .example('$0 /path/to/my.md ', 'render the markdown file')
-.help('h')
-    .alias('h', 'help')
-    .epilog('©2019 - Abbey Hawk Sparrow');
-argv = yargs.argv;
-
-var target = argv._.pop();
-
-ensureExists(home.resolve('~/.NuFO'), 0744, function(err) {
-    if (err) throw err;
-    config(home.resolve('~/.NuFO/config.json'), {
-        cacheDir : home.resolve('~/.NuFO')+'/'
-    }, function(err, conf){
-        conf.file = target;
-        var nufo = new NuFO(conf);
-        nufo.transform('NFO', function(err, result){
-            if(err) throw err;
-            console.log(result);
-        });
-    })
+var CLApp = require('app-term-kit');
+var arrays = require('async-arrays');
+var app = new CLApp('NuFO', {
+    copyright : 'Abbey Hawk Sparrow',
+    trademark : 'Abbey Hawk Sparrow',
+    copystart : '2014',
+    defaults : `{
+    // defaults go here.
+    "bitdepth": 2,
+    "cacheDir" : "${os.homedir()}/.NuFO/"
+}`
 });
 
-//UTIL
-
-function ensureExists(path, mask, cb) {
-    fs.stat(path, function(err){
-        if(err){
-            fs.mkdir(path, mask, function(err) {
-                if (err) cb(err); // something else went wrong
-                else cb(undefined); // successfully created folder
-            });
-        }else cb(undefined);
+app.useable(function(err){
+    app.config(function(err, conf, writeConfig){
+        app.command({
+            name:'convert',
+            description: 'convert a markdown file to an NFO',
+            examples: [[
+                '$0 convert my/file.md ', 'convert `my/file.md` to an NFO'
+            ]],
+            action : function(argv, target, complete){
+                conf.file = target;
+                var nufo = new NuFO(conf);
+                nufo.transform(
+                    (argv.format ||'NFO').toUpperCase(),
+                    function(err, result){
+                        if(err) throw err;
+                        console.log(result);
+                    }
+                );
+            }
+        });
+        app.argument('format', 'string','the format to output', 1, [
+            'nfo'
+        ]);
+        app.help();
+        app.header('deck');
+        app.footer();
+        app.run(function(ex){
+            if(ex) throw ex;
+        })
     });
-}
-
-function config(path, initial, cb) {
-    fs.stat(path, function(err){
-        if(err){
-            fs.writeFile(path, JSON.stringify(initial), function(){
-                cb(undefined, initial);
-            });
-        }else{
-            fs.readFile(path, function(err, body){
-                cb(undefined, JSON.parse(body));
-            });
-        }
-    })
-}
+});
